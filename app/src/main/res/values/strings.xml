@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">SpeechRecognitionWithVideo</string>
+    <string name="app_name">Jitsi Android</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">SpeechRecognitionDemo</string>
+    <string name="title_activity_main">Speech Recognition</string>
     <string name="str_btn_speak">Speak</string>
 
 </resources>

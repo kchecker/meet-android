@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private JitsiMeetView view;
 
     private FrameLayout jitsi_layout;
-    private TextView cordinaateTextView;
+
 
     protected JitsiMeetView initializeView() {
 
@@ -100,20 +100,16 @@ public class MainActivity extends AppCompatActivity {
         view = new JitsiMeetView(this);
         view.setWelcomePageEnabled(true);//set jitsi-meet
         view.loadURL(null);
-
-        setContentView(R.layout.activity_main);
+//
+       setContentView(R.layout.activity_main);
         jitsi_layout=(FrameLayout) this.findViewById(R.id.jitsi_content);
         FrameLayout.LayoutParams lparams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        //view.setLayoutParams(lparams);
+        view.setLayoutParams(lparams);
         final TextView text = (TextView) jitsi_layout.getChildAt(0);
         jitsi_layout.removeViewAt(0);
         this.jitsi_layout.addView(view);
         this.jitsi_layout.addView(text);
-
-
-
-
 
 
 

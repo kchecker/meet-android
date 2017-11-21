@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FrameLayout jitsi_layout;
 
-
+    private   BallBounces ball;
     protected JitsiMeetView initializeView() {
 
 
@@ -106,10 +106,13 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout.LayoutParams lparams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lparams);
-        final TextView text = (TextView) jitsi_layout.getChildAt(0);
-        jitsi_layout.removeViewAt(0);
+
+//        jitsi_layout.removeViewAt(0);
         this.jitsi_layout.addView(view);
-        this.jitsi_layout.addView(text);
+        //this.jitsi_layout.addView(text);
+
+        ball = new BallBounces(this);
+        jitsi_layout.addView(ball);
 
 
 

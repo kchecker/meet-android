@@ -13,19 +13,7 @@
         android:layout_width="match_parent"
         >
 
-        <TextView
-            android:id="@+id/transperent_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed"
-            android:text="This is a\nTransparent Activity"
-            android:textColor="#f219b5"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"
 
-            />
     </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

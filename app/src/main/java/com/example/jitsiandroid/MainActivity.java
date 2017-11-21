@@ -1,5 +1,7 @@
 package com.example.jitsiandroid;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         //this.jitsi_layout.addView(text);
 
         ball = new BallBounces(this);
+        //ball.setBackgroundColor(Color.TRANSPARENT);
         jitsi_layout.addView(ball);
 
 

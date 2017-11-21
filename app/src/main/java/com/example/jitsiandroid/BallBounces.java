@@ -8,8 +8,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -88,8 +91,11 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
         fpsPaint.setTextSize(30);
 
         //Set thread
-        getHolder().addCallback(this);
 
+        this.setZOrderOnTop(true);
+        SurfaceHolder a = getHolder();
+        a.setFormat(PixelFormat.TRANSPARENT);
+        a.addCallback(this);
         setFocusable(true);
     }
 
@@ -100,14 +106,16 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
         screenW = w;
         screenH = h;
 
-        bgr = Bitmap.createScaledBitmap(bgr, w, h, true); //Scale background to fit the screen.
-        bgrW = bgr.getWidth();
-        bgrH = bgr.getHeight();
+       // bgr = Bitmap.createScaledBitmap(bgr, w, h, true); //Scale background to fit the screen.
+//        bgrW = bgr.getWidth();
+//        bgrH = bgr.getHeight();
+        bgrW = w;
+        bgrH = h;
 
         //Create a mirror image of the background (horizontal flip) - for a more circular background.
         Matrix matrix = new Matrix();  //Like a frame or mould for an image.
         matrix.setScale(-1, 1); //Horizontal mirror effect.
-        bgrReverse = Bitmap.createBitmap(bgr, 0, 0, bgrW, bgrH, matrix, true); //Create a new mirrored bitmap by applying the matrix.
+        //bgrReverse = Bitmap.createBitmap(bgr, 0, 0, bgrW, bgrH, matrix, true); //Create a new mirrored bitmap by applying the matrix.
 
         ballX = (int) (screenW /2) - (ballW / 2) ; //Centre ball X into the centre of the screen.
         ballY = -50; //Centre ball height above the screen.
@@ -146,7 +154,8 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        //canvas.drawColor(Color.argb(0, 0, 0, 0),PorterDuff.Mode.CLEAR);
         //Draw scrolling background.
         Rect fromRect1 = new Rect(0, 0, bgrW - bgrScroll, bgrH);
         Rect toRect1 = new Rect(bgrScroll, 0, bgrW, bgrH);
@@ -216,7 +225,12 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+
+        //holder.setFormat(PixelFormat.TRANSPARENT);
         thread = new GameThread(getHolder(), this);
+        //thread.getSurfaceHolder().setFormat(PixelFormat.TRANSPARENT);
+        //thread.setRunning(false);
+        //thread.getSurfaceHolder().setFormat(PixelFormat.TRANSLUCENT);
         thread.setRunning(true);
         thread.start();
     }
@@ -243,6 +257,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
 
         public GameThread(SurfaceHolder surfaceHolder, BallBounces gameView) {
             this.surfaceHolder = surfaceHolder;
+            //this.surfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
             this.gameView = gameView;
         }
 
@@ -274,9 +289,11 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
                 timePrevFrame = System.currentTimeMillis();
 
                 try {
+
                     c = surfaceHolder.lockCanvas(null);
                     synchronized (surfaceHolder) {
                         //call methods to draw and process next fame
+
                         gameView.onDraw(c);
                     }
                 } finally {

@@ -1,23 +1,31 @@
 package com.example.jitsiandroid;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 
-import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetView;
 import org.jitsi.meet.sdk.JitsiMeetViewListener;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import android.content.Intent;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import java.util.Map;
 
-public class MainActivity extends JitsiMeetActivity {
 
-    @Override
+public class MainActivity extends AppCompatActivity {
+    private JitsiMeetView view;
+
+    private FrameLayout jitsi_layout;
+    private TextView cordinaateTextView;
+
     protected JitsiMeetView initializeView() {
-        JitsiMeetView view = super.initializeView();
+
 
         // XXX In order to increase (1) awareness of API breakages and (2) API
         // coverage, utilize JitsiMeetViewListener in the Debug configuration of
@@ -77,7 +85,6 @@ public class MainActivity extends JitsiMeetActivity {
         return view;
     }
 
-
     @Override
     public void onBackPressed() {
         if (!JitsiMeetView.onBackPressed()) {
@@ -88,13 +95,36 @@ public class MainActivity extends JitsiMeetActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setWelcomePageEnabled(true);
         super.onCreate(savedInstanceState);
+
+        view = new JitsiMeetView(this);
+        view.setWelcomePageEnabled(true);//set jitsi-meet
+        view.loadURL(null);
+
+        setContentView(R.layout.activity_main);
+        jitsi_layout=(FrameLayout) this.findViewById(R.id.jitsi_content);
+        FrameLayout.LayoutParams lparams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        //view.setLayoutParams(lparams);
+        final TextView text = (TextView) jitsi_layout.getChildAt(0);
+        jitsi_layout.removeViewAt(0);
+        this.jitsi_layout.addView(view);
+        this.jitsi_layout.addView(text);
+
+
+
+
+
+
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        view.dispose();
+        view = null;
 
         JitsiMeetView.onHostDestroy(this);
     }
@@ -117,4 +147,6 @@ public class MainActivity extends JitsiMeetActivity {
 
         JitsiMeetView.onHostResume(this);
     }
+
+
 }

@@ -72,7 +72,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
 
     public BallBounces(Context context) {
         super(context);
-        ball = BitmapFactory.decodeResource(getResources(), R.drawable.ball); //Load a ball image.
+        ball = BitmapFactory.decodeResource(getResources(), R.drawable.redpoint); //Load a ball image.
         //bgr = BitmapFactory.decodeResource(getResources(),R.drawable.transparent); //Load a background.
         ballW = ball.getWidth();
         ballH = ball.getHeight();

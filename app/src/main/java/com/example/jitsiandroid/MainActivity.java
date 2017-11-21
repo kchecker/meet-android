@@ -1,31 +1,35 @@
 package com.example.jitsiandroid;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import org.jitsi.meet.sdk.JitsiMeetActivity;
 import org.jitsi.meet.sdk.JitsiMeetView;
 import org.jitsi.meet.sdk.JitsiMeetViewListener;
-import com.example.jitsiandroid.WebSocketEcho;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.IOException;
 import java.util.Map;
 
-public class MainActivity extends JitsiMeetActivity {
+public class MainActivity extends JitsiMeetActivity{
 
     @Override
     protected JitsiMeetView initializeView() {
         JitsiMeetView view = super.initializeView();
 
 
-        /*//run together in a seperate thread--------------------------------------------------
-        WebSocketEcho webSocketEcho = new WebSocketEcho();
-        //webSocketEcho.run();
-        Thread thread = new Thread(webSocketEcho);
-        thread.run();*/
+        //run together in a seperate thread--------------------------------------------------
+        Thread t = new Thread(new Runnable() {
+            public void run()
+            {
+                WebSocketEcho webSocketEcho = new WebSocketEcho();
+                try {
+                    webSocketEcho.run();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }});
+        t.start();
 
         // XXX In order to increase (1) awareness of API breakages and (2) API
         // coverage, utilize JitsiMeetViewListener in the Debug configuration of

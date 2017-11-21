@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "2g"
+    }
 }
 
 dependencies {
@@ -27,6 +31,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'org.jitsi.react:jitsi-meet-sdk:1.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
+    implementation 'org.jitsi.react:jitsi-meet-sdk:1.9.0', {
+        exclude module: 'okhttp3'
+    }
 }

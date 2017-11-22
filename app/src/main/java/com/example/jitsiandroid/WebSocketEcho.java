@@ -1,6 +1,12 @@
 package com.example.jitsiandroid;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -53,12 +59,61 @@ public class WebSocketEcho implements WebSocketListener {
 
     @Override public void onMessage(ResponseBody message) throws IOException {
         if (message.contentType() == TEXT) {
-            System.out.println("MESSAGE: " + message.string());
+            String togetherjs = message.string(); //get togetherjs 'msg' object
+            Log.d("TOGETHERJS: " , togetherjs);
+            try {
+                //make a JSONObject and retrieve the required values
+                JSONObject obj = new JSONObject(togetherjs);
+                String type = obj.getString("type");
+                getCoordinates(type, obj); //to get coordinates of a drawing
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("MESSAGE: " + message.source().readByteString().hex());
         }
-        message.close();
+        //message.close(); //avoid continuous listening
     }
+
+    //get coordinates------------------------------------------------
+    public void getCoordinates(String type, JSONObject obj) throws JSONException {
+        switch (type) {
+            case "init-connection":
+                Log.d("INIT_CONNECTION: ", obj.getString("peer-count"));
+                break;
+            case "app.draw":
+                setStartX(Integer.parseInt(obj.getJSONObject("start").getString("x")));
+                setStartY(Integer.parseInt(obj.getJSONObject("start").getString("y")));
+                setEndX(Integer.parseInt(obj.getJSONObject("end").getString("x")));
+                setEndY(Integer.parseInt(obj.getJSONObject("end").getString("y")));
+                Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("x"));
+                Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("y"));
+                Log.d("APP.DRAW: ", obj.getJSONObject("end").getString("x"));
+                Log.d("APP.DRAW: ", obj.getJSONObject("end").getString("y"));
+                break;
+            case "cursor-click":
+                Log.d("CURSOR_CLICK: ", obj.getString("offsetX"));
+                Log.d("CURSOR_CLICK: ", obj.getString("offsetY"));
+                break;
+            default:
+                Log.d("NO DRAW: ", type);
+                break;
+        }
+    }
+    private int setStartX(int x) {
+        return x;
+    }
+    private int setStartY(int y) {
+        return y;
+    }
+    private int setEndX(int x) {
+        return x;
+    }
+    private int setEndY(int y) {
+        return y;
+    }
+
+
 
     @Override public void onPong(Buffer payload) {
         System.out.println("PONG: " + payload.readUtf8());

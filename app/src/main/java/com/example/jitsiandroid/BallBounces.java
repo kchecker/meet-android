@@ -14,6 +14,7 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -28,6 +29,8 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import static com.facebook.react.common.ReactConstants.TAG;
 
 
 /**
@@ -69,6 +72,11 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
     long timePrevFrame = 0;
     long timeDelta;
 
+    //touchevent
+    float  touch_initialX, touch_initialY;
+
+    int x=0;
+    int y=0;
 
     public BallBounces(Context context) {
         super(context);
@@ -128,17 +136,19 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
     public synchronized boolean onTouchEvent(MotionEvent ev) {
 
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                ballX = (int) ev.getX() - ballW/2;
-                ballY = (int) ev.getY() - ballH/2;
-
-                ballFingerMove = true;
-                break;
-            }
+//            case MotionEvent.ACTION_DOWN: {
+//                ballX = (int) ev.getX() - ballW/2;
+//                ballY = (int) ev.getY() - ballH/2;
+//
+//
+//                ballFingerMove = true;
+//                break;
+//            }
 
             case MotionEvent.ACTION_MOVE: {
-                ballX = (int) ev.getX() - ballW/2;
-                ballY = (int) ev.getY() - ballH/2;
+//                ballX = (int) ev.getX() - ballW/2;
+//                ballY = (int) ev.getY() - ballH/2;
+                onMoveEvent(++x,++y);
 
                 break;
             }
@@ -150,6 +160,12 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
         }
         return true;
     }
+//added new function get user inputs
+   public boolean onMoveEvent(int x, int y){
+        ballX =x;
+        ballY =y;
+        return true;
+   }
 
     @Override
     public void onDraw(Canvas canvas) {

@@ -1,14 +1,17 @@
 package com.example.jitsiandroid;
 
+
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import org.jitsi.meet.sdk.JitsiMeetView;
 import org.jitsi.meet.sdk.JitsiMeetViewListener;
 
-import android.content.Intent;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +20,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.Map;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +33,20 @@ public class MainActivity extends AppCompatActivity {
     private   BallBounces ball;
     protected JitsiMeetView initializeView() {
 
+
+
+        //run together in a seperate thread--------------------------------------------------
+        Thread t = new Thread(new Runnable() {
+            public void run()
+            {
+                WebSocketEcho webSocketEcho = new WebSocketEcho();
+                try {
+                    webSocketEcho.run();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }});
+        t.start();
 
         // XXX In order to increase (1) awareness of API breakages and (2) API
         // coverage, utilize JitsiMeetViewListener in the Debug configuration of

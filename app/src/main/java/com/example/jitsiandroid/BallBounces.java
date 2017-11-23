@@ -172,7 +172,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+       // canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         //canvas.drawColor(Color.argb(0, 0, 0, 0),PorterDuff.Mode.CLEAR);
         //Draw scrolling background.
         Rect fromRect1 = new Rect(0, 0, bgrW - bgrScroll, bgrH);
@@ -228,7 +228,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
 
         //Measure frame rate (unit: frames per second).
         now=System.currentTimeMillis();
-        canvas.drawText(framesCountAvg+" fps", 40, 70, fpsPaint);
+//        canvas.drawText(framesCountAvg+" fps", 40, 70, fpsPaint);
         framesCount++;
         if(now-framesTimer>1000) {
             framesTimer=now;

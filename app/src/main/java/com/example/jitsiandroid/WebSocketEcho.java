@@ -91,10 +91,10 @@ public class WebSocketEcho implements WebSocketListener,Subject {
         int firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY;
         switch (type) {
             case "app.draw":
-                firstCoordinateX = Integer.parseInt(obj.getJSONObject("start").getString("x"));
-                firstCoordinateY = Integer.parseInt(obj.getJSONObject("start").getString("y"));
-                secondCoordinateX = Integer.parseInt(obj.getJSONObject("end").getString("x"));
-                secondCoordinateY = Integer.parseInt(obj.getJSONObject("end").getString("y"));
+                firstCoordinateX = (int)Double.parseDouble(obj.getJSONObject("start").getString("x"));
+                firstCoordinateY = (int)Double.parseDouble(obj.getJSONObject("start").getString("y"));
+                secondCoordinateX = (int)Double.parseDouble(obj.getJSONObject("end").getString("x"));
+                secondCoordinateY = (int)Double.parseDouble(obj.getJSONObject("end").getString("y"));
                 Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("x"));
                 Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("y"));
                 Log.d("APP.DRAW: ", obj.getJSONObject("end").getString("x"));
@@ -103,8 +103,8 @@ public class WebSocketEcho implements WebSocketListener,Subject {
                 Log.d("ON-MOVE: ","fffffffffdr");
                 break;
             case "cursor-click":
-                firstCoordinateX = Integer.parseInt(obj.getString("offsetX"));
-                firstCoordinateY = Integer.parseInt(obj.getString("offsetY"));
+                firstCoordinateX = (int)Double.parseDouble(obj.getString("offsetX"));
+                firstCoordinateY = (int)Double.parseDouble(obj.getString("offsetY"));
                 setCoordinates(firstCoordinateX,firstCoordinateY,0,0);
                 Log.d("CURSOR_CLICK: ", obj.getString("offsetX"));
                 Log.d("CURSOR_CLICK: ", obj.getString("offsetY"));

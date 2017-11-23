@@ -6,7 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -26,9 +27,19 @@ import static okhttp3.ws.WebSocket.TEXT;
  * Created by kasumi on 11/21/17.
  */
 
-public class WebSocketEcho implements WebSocketListener {
+public class WebSocketEcho implements WebSocketListener,Subject {
+    private static WebSocketEcho INSTANCE = null;
+    private int startX ,startY, endX, endY;
 
     private final Executor writeExecutor = Executors.newSingleThreadExecutor();
+    private List<Observer> observers = new ArrayList<Observer>();
+
+    public static WebSocketEcho getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new WebSocketEcho();
+        }
+        return INSTANCE;
+    }
 
     public void run() throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -77,43 +88,35 @@ public class WebSocketEcho implements WebSocketListener {
 
     //get coordinates------------------------------------------------
     public void getCoordinates(String type, JSONObject obj) throws JSONException {
+        int firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY;
         switch (type) {
-            case "init-connection":
-                Log.d("INIT_CONNECTION: ", obj.getString("peer-count"));
-                break;
             case "app.draw":
-                setStartX(Integer.parseInt(obj.getJSONObject("start").getString("x")));
-                setStartY(Integer.parseInt(obj.getJSONObject("start").getString("y")));
-                setEndX(Integer.parseInt(obj.getJSONObject("end").getString("x")));
-                setEndY(Integer.parseInt(obj.getJSONObject("end").getString("y")));
+                firstCoordinateX = Integer.parseInt(obj.getJSONObject("start").getString("x"));
+                firstCoordinateY = Integer.parseInt(obj.getJSONObject("start").getString("y"));
+                secondCoordinateX = Integer.parseInt(obj.getJSONObject("end").getString("x"));
+                secondCoordinateY = Integer.parseInt(obj.getJSONObject("end").getString("y"));
                 Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("x"));
                 Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("y"));
                 Log.d("APP.DRAW: ", obj.getJSONObject("end").getString("x"));
                 Log.d("APP.DRAW: ", obj.getJSONObject("end").getString("y"));
+                setCoordinates(firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY);
+                Log.d("ON-MOVE: ","fffffffffdr");
                 break;
             case "cursor-click":
+                firstCoordinateX = Integer.parseInt(obj.getString("offsetX"));
+                firstCoordinateY = Integer.parseInt(obj.getString("offsetY"));
+                setCoordinates(firstCoordinateX,firstCoordinateY,0,0);
                 Log.d("CURSOR_CLICK: ", obj.getString("offsetX"));
                 Log.d("CURSOR_CLICK: ", obj.getString("offsetY"));
+                Log.d("ON-MOVE: ","fffffffffcli");
                 break;
             default:
+                setCoordinates(0,0,0,0);
                 Log.d("NO DRAW: ", type);
+                Log.d("ON-MOVE: ","fffffffff787");
                 break;
         }
     }
-    private int setStartX(int x) {
-        return x;
-    }
-    private int setStartY(int y) {
-        return y;
-    }
-    private int setEndX(int x) {
-        return x;
-    }
-    private int setEndY(int y) {
-        return y;
-    }
-
-
 
     @Override public void onPong(Buffer payload) {
         System.out.println("PONG: " + payload.readUtf8());
@@ -125,5 +128,33 @@ public class WebSocketEcho implements WebSocketListener {
 
     @Override public void onFailure(IOException e, Response response) {
         e.printStackTrace();
+    }
+
+    public void registerObserver(Observer coordinatesObserver) {
+        if(!observers.contains(coordinatesObserver)) {
+            observers.add(coordinatesObserver);
+        }
+    }
+
+    public void removeObserver(Observer coordinatesObserver) {
+        if(observers.contains(coordinatesObserver)) {
+            observers.remove(coordinatesObserver);
+        }
+    }
+
+    public void notifyObservers() {
+        for (Observer observer: observers) {
+            observer.onCoordinatesChanged(startX ,startY, endX, endY);
+            Log.d("ON-MOVE: ","fffffffffk");
+        }
+    }
+
+    public void setCoordinates(int startX, int startY, int endX, int endY) {
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+        notifyObservers();
+        Log.d("ON-MOVE: ","fffffffff0f");
     }
 }

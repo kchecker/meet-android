@@ -1,8 +1,5 @@
 package com.example.jitsiandroid;
 
-
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.content.Intent;
 
 import android.os.Bundle;

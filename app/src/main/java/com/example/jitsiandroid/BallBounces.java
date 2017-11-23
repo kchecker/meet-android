@@ -38,8 +38,7 @@ import static com.facebook.react.common.ReactConstants.TAG;
  */
 
 
-
-class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
+class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer {
     GameThread thread;
     int screenW; //Device's screen width.
     int screenH; //Devices's screen height.
@@ -80,6 +79,9 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
 
     public BallBounces(Context context) {
         super(context);
+        //-------------------------------------------------------------------------------------------------
+        Subject subjectCoordinates = WebSocketEcho.getInstance();
+        subjectCoordinates.registerObserver(this);
         ball = BitmapFactory.decodeResource(getResources(), R.drawable.redpoint); //Load a ball image.
         //bgr = BitmapFactory.decodeResource(getResources(),R.drawable.transparent); //Load a background.
         ballW = ball.getWidth();
@@ -148,7 +150,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_MOVE: {
 //                ballX = (int) ev.getX() - ballW/2;
 //                ballY = (int) ev.getY() - ballH/2;
-                onMoveEvent(++x,++y);
+                onMoveEvent(x,y);
 
                 break;
             }
@@ -263,6 +265,11 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback {
 
             }
         }
+    }
+
+    public void onCoordinatesChanged(int startX, int startY, int endX, int endY) {
+        onMoveEvent(startX,startY);
+        Log.d("ON-MOVE: ","ffffffffff");
     }
 
 

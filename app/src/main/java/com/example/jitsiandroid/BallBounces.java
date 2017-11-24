@@ -5,6 +5,7 @@ package com.example.jitsiandroid;
  */
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,9 +13,12 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -29,6 +33,7 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 import static com.facebook.react.common.ReactConstants.TAG;
 
@@ -148,7 +153,9 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
             case MotionEvent.ACTION_MOVE: {
 //                ballX = (int) ev.getX() - ballW/2;
 //                ballY = (int) ev.getY() - ballH/2;
+
                 onMoveEvent(x,y);
+
 
                 break;
             }
@@ -162,15 +169,27 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
     }
 //added new function get user inputs
    public boolean onMoveEvent(int x, int y){
-        ballX =(int)0.9*x;
-        ballY =(int)0.9*y;
+        ballX = (int)((screenW*x)/400);
+        ballY = (int)((screenH*y)/1140);//0.56
+       Log.d("screen", String.valueOf(screenW));
         return true;
    }
+
+//   //get screen size
+//   public static int getScreenWidth() {
+//       Log.d("size", String.valueOf(Resources.getSystem().getDisplayMetrics().widthPixels));
+//       return Resources.getSystem().getDisplayMetrics().widthPixels;
+//
+//   }
+//
+//    public static int getScreenHeight() {
+//        return Resources.getSystem().getDisplayMetrics().heightPixels;
+//    }
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-       // canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);//clear the point
         //canvas.drawColor(Color.argb(0, 0, 0, 0),PorterDuff.Mode.CLEAR);
         //Draw scrolling background.
         Rect fromRect1 = new Rect(0, 0, bgrW - bgrScroll, bgrH);

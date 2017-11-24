@@ -162,8 +162,8 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
     }
 //added new function get user inputs
    public boolean onMoveEvent(int x, int y){
-        ballX =x;
-        ballY =y;
+        ballX =(int)0.9*x;
+        ballY =(int)0.9*y;
         return true;
    }
 

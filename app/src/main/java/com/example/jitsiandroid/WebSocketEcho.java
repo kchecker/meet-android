@@ -29,9 +29,11 @@ import static okhttp3.ws.WebSocket.TEXT;
 
 public class WebSocketEcho implements WebSocketListener,Subject {
     private static WebSocketEcho INSTANCE = null;
+    //coordinates from togetherjs
     private int startX ,startY, endX, endY;
 
     private final Executor writeExecutor = Executors.newSingleThreadExecutor();
+    //array list for observers
     private List<Observer> observers = new ArrayList<Observer>();
 
     public static WebSocketEcho getInstance() {
@@ -59,8 +61,6 @@ public class WebSocketEcho implements WebSocketListener,Subject {
                 try {
                     webSocket.sendMessage(RequestBody.create(TEXT, "Hello..."));
                     webSocket.sendMessage(RequestBody.create(TEXT, "...World!"));
-                    /*webSocket.sendMessage(RequestBody.create(BINARY, ByteString.decodeHex("deadbeef")));
-                    webSocket.close(1000, "Goodbye, World!");*/
                 } catch (IOException e) {
                     System.err.println("Unable to send messages: " + e.getMessage());
                 }
@@ -74,9 +74,9 @@ public class WebSocketEcho implements WebSocketListener,Subject {
             Log.d("TOGETHERJS: " , togetherjs);
             try {
                 //make a JSONObject and retrieve the required values
-                JSONObject obj = new JSONObject(togetherjs);
-                String type = obj.getString("type");
-                getCoordinates(type, obj); //to get coordinates of a drawing
+                JSONObject togetherjsObject = new JSONObject(togetherjs);
+                String togetherjsType = togetherjsObject.getString("type");
+                getCoordinates(togetherjsType, togetherjsObject); //to get coordinates of a drawing
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -87,33 +87,23 @@ public class WebSocketEcho implements WebSocketListener,Subject {
     }
 
     //get coordinates------------------------------------------------
-    public void getCoordinates(String type, JSONObject obj) throws JSONException {
+    public void getCoordinates(String togetherjsType, JSONObject togetherjsObject) throws JSONException {
         int firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY;
-        switch (type) {
+        switch (togetherjsType) {
             case "app.draw":
-                firstCoordinateX = (int)Double.parseDouble(obj.getJSONObject("start").getString("x"));
-                firstCoordinateY = (int)Double.parseDouble(obj.getJSONObject("start").getString("y"));
-                secondCoordinateX = (int)Double.parseDouble(obj.getJSONObject("end").getString("x"));
-                secondCoordinateY = (int)Double.parseDouble(obj.getJSONObject("end").getString("y"));
-                Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("x"));
-                Log.d("APP.DRAW: ", obj.getJSONObject("start").getString("y"));
-                Log.d("APP.DRAW: ", obj.getJSONObject("end").getString("x"));
-                Log.d("APP.DRAW: ", obj.getJSONObject("end").getString("y"));
-                setCoordinates(firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY);
-                Log.d("ON-MOVE: ","fffffffffdr");
+                firstCoordinateX = (int)Double.parseDouble(togetherjsObject.getJSONObject("start").getString("x"));
+                firstCoordinateY = (int)Double.parseDouble(togetherjsObject.getJSONObject("start").getString("y"));
+                secondCoordinateX = (int)Double.parseDouble(togetherjsObject.getJSONObject("end").getString("x"));
+                secondCoordinateY = (int)Double.parseDouble(togetherjsObject.getJSONObject("end").getString("y"));
+                //setCoordinates(firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY);
                 break;
             case "cursor-click":
-                firstCoordinateX = (int)Double.parseDouble(obj.getString("offsetX"));
-                firstCoordinateY = (int)Double.parseDouble(obj.getString("offsetY"));
+                firstCoordinateX = (int)Double.parseDouble(togetherjsObject.getString("offsetX"));
+                firstCoordinateY = (int)Double.parseDouble(togetherjsObject.getString("offsetY"));
                 setCoordinates(firstCoordinateX,firstCoordinateY,0,0);
-                Log.d("CURSOR_CLICK: ", obj.getString("offsetX"));
-                Log.d("CURSOR_CLICK: ", obj.getString("offsetY"));
-                Log.d("ON-MOVE: ","fffffffffcli");
                 break;
             default:
-                setCoordinates(0,0,0,0);
-                Log.d("NO DRAW: ", type);
-                Log.d("ON-MOVE: ","fffffffff787");
+                //setCoordinates(0,0,0,0);
                 break;
         }
     }
@@ -130,6 +120,7 @@ public class WebSocketEcho implements WebSocketListener,Subject {
         e.printStackTrace();
     }
 
+    //observer design pattern added----------------------------------------------------------------------------------------
     public void registerObserver(Observer coordinatesObserver) {
         if(!observers.contains(coordinatesObserver)) {
             observers.add(coordinatesObserver);
@@ -145,7 +136,6 @@ public class WebSocketEcho implements WebSocketListener,Subject {
     public void notifyObservers() {
         for (Observer observer: observers) {
             observer.onCoordinatesChanged(startX ,startY, endX, endY);
-            Log.d("ON-MOVE: ","fffffffffk");
         }
     }
 
@@ -155,6 +145,5 @@ public class WebSocketEcho implements WebSocketListener,Subject {
         this.endX = endX;
         this.endY = endY;
         notifyObservers();
-        Log.d("ON-MOVE: ","fffffffff0f");
     }
 }

@@ -30,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private   BallBounces ball;
     protected JitsiMeetView initializeView() {
 
-
-
-
         // XXX In order to increase (1) awareness of API breakages and (2) API
         // coverage, utilize JitsiMeetViewListener in the Debug configuration of
         // the app.
@@ -121,24 +118,21 @@ public class MainActivity extends AppCompatActivity {
         //ball.setBackgroundColor(Color.TRANSPARENT);
         jitsi_layout.addView(ball);
 
-        //run together in a seperate thread--------------------------------------------------
+        //run togetherjs in a seperate thread--------------------------------------------------
         Thread t = new Thread(new Runnable() {
             public void run()
             {
                 WebSocketEcho webSocketEcho = new WebSocketEcho();
                 try {
                     webSocketEcho.run();
+                    //register ball bounce observer
                     webSocketEcho.registerObserver(ball);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }});
         t.start();
-
-
     }
-
-
 
     @Override
     protected void onDestroy() {

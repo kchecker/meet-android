@@ -32,11 +32,9 @@ import android.view.SurfaceView;
 
 import static com.facebook.react.common.ReactConstants.TAG;
 
-
 /**
  * Created by supuni on 11/21/17.
  */
-
 
 class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer {
     GameThread thread;
@@ -267,11 +265,10 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
         }
     }
 
+    //get coordinates for onMoveEvent
     public void onCoordinatesChanged(int startX, int startY, int endX, int endY) {
         onMoveEvent(startX,startY);
-        Log.d("ON-MOVE: ","ffffffffff");
     }
-
 
     class GameThread extends Thread {
         private SurfaceHolder surfaceHolder;

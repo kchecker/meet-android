@@ -7,12 +7,12 @@
     tools:context="com.example.jitsiandroid.MainActivity">
 
     <FrameLayout
-        android:orientation="vertical"
         android:id="@+id/jitsi_content"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-        >
-    </FrameLayout>
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="-42dp"
+        tools:ignore="MissingConstraints"></FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

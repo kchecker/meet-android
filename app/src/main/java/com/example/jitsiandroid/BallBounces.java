@@ -144,8 +144,6 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
 //            case MotionEvent.ACTION_DOWN: {
 //                ballX = (int) ev.getX() - ballW/2;
 //                ballY = (int) ev.getY() - ballH/2;
-//
-//
 //                ballFingerMove = true;
 //                break;
 //            }
@@ -154,9 +152,14 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
 //                ballX = (int) ev.getX() - ballW/2;
 //                ballY = (int) ev.getY() - ballH/2;
 
+                Log.d("DEVICE: ", String.valueOf((int) ev.getX()));
+                Log.d("DEVICE: ", String.valueOf((int) ev.getY()));
+                /*int deviceWidth = (int) ev.getX();
+                int deviceHeight = (int) ev.getY();
+                x = (int)(deviceWidth*x/400);
+                y = (int)(deviceHeight*y/1140);*/
                 onMoveEvent(x,y);
-
-
+                getScreenWidth();
                 break;
             }
 
@@ -170,17 +173,18 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
 //added new function get user inputs
    public boolean onMoveEvent(int x, int y){
         ballX = x;//(int)((screenW*x)/400);
+
         ballY = y; //(int)((screenH*y)/1140);//0.56
-       Log.d("screen", String.valueOf(screenW));
+        Log.d("screen", String.valueOf(screenW));
+
         return true;
    }
 
-//   //get screen size
-//   public static int getScreenWidth() {
-//       Log.d("size", String.valueOf(Resources.getSystem().getDisplayMetrics().widthPixels));
-//       return Resources.getSystem().getDisplayMetrics().widthPixels;
-//
-//   }
+        //get screen size
+       public static int getScreenWidth() {
+          Log.d("size", String.valueOf(Resources.getSystem().getDisplayMetrics().widthPixels));
+          return Resources.getSystem().getDisplayMetrics().widthPixels;
+       }
 //
 //    public static int getScreenHeight() {
 //        return Resources.getSystem().getDisplayMetrics().heightPixels;

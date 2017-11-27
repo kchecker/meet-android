@@ -1,8 +1,7 @@
 package com.example.jitsiandroid;
 
-import android.content.Intent;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -11,12 +10,10 @@ import org.jitsi.meet.sdk.JitsiMeetViewListener;
 
 
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
 
 import java.io.IOException;
 import java.util.Map;
@@ -104,8 +101,13 @@ public class MainActivity extends AppCompatActivity {
         view = new JitsiMeetView(this);
         view.setWelcomePageEnabled(true);//set jitsi-meet
         view.loadURL(null);
-//
-       setContentView(R.layout.activity_main);
+
+        //disable the title bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_main);
         jitsi_layout=(FrameLayout) this.findViewById(R.id.jitsi_content);
         FrameLayout.LayoutParams lparams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);

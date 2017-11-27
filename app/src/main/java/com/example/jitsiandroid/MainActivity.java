@@ -19,9 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
-
-
 
 public class MainActivity extends AppCompatActivity {
     private JitsiMeetView view;
@@ -29,65 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout jitsi_layout;
 
     private   BallBounces ball;
-    protected JitsiMeetView initializeView() {
-
-        // XXX In order to increase (1) awareness of API breakages and (2) API
-        // coverage, utilize JitsiMeetViewListener in the Debug configuration of
-        // the app.
-        if (BuildConfig.DEBUG && view != null) {
-            view.setListener(new JitsiMeetViewListener() {
-                private void on(String name, Map<String, Object> data) {
-                    // Log with the tag "ReactNative" in order to have the log
-                    // visible in react-native log-android as well.
-                    Log.d(
-                            "ReactNative",
-                            JitsiMeetViewListener.class.getSimpleName() + " "
-                                    + name + " "
-                                    + data);
-                }
-
-                @Override
-                public void onConferenceFailed(Map<String, Object> data) {
-                    on("CONFERENCE_FAILED", data);
-                }
-
-                @Override
-                public void onConferenceJoined(Map<String, Object> data) {
-                    on("CONFERENCE_JOINED", data);
-                }
-
-                @Override
-                public void onConferenceLeft(Map<String, Object> data) {
-                    on("CONFERENCE_LEFT", data);
-                }
-
-                @Override
-                public void onConferenceWillJoin(Map<String, Object> data) {
-                    on("CONFERENCE_WILL_JOIN", data);
-                }
-
-                @Override
-                public void onConferenceWillLeave(Map<String, Object> data) {
-                    on("CONFERENCE_WILL_LEAVE", data);
-                }
-
-                @Override
-                public void onLoadConfigError(Map<String, Object> data) {
-                    on("LOAD_CONFIG_ERROR", data);
-                }
-            });
-        }
-
-        Bundle config = new Bundle();
-        config.putBoolean("startWithAudioMuted", false);
-        config.putBoolean("startWithVideoMuted", false);
-        Bundle urlObject = new Bundle();
-        urlObject.putBundle("config", config);
-        urlObject.putString("url", "https://meet.jit.si/1234");
-        view.loadURLObject(urlObject);
-
-        return view;
-    }
 
     @Override
     public void onBackPressed() {
@@ -103,8 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
         view = new JitsiMeetView(this);
         view.setWelcomePageEnabled(true);//set jitsi-meet
-        view.loadURL(null);
-//
+
+        Bundle config = new Bundle();
+        config.putBoolean("startWithAudioMuted", false);
+        config.putBoolean("startWithVideoMuted", false);
+        Bundle urlObject = new Bundle();
+        urlObject.putBundle("config", config);
+        //urlObject.putString("url", "https://meet.meetrix.xyz/12345");
+        urlObject.putString("url", "https://meet.jit.si/1234");
+        view.loadURLObject(urlObject);
+
        setContentView(R.layout.activity_main);
         jitsi_layout=(FrameLayout) this.findViewById(R.id.jitsi_content);
         FrameLayout.LayoutParams lparams = new FrameLayout.LayoutParams(
@@ -163,6 +112,4 @@ public class MainActivity extends AppCompatActivity {
 
         JitsiMeetView.onHostResume(this);
     }
-
-
 }

@@ -4,6 +4,7 @@ package com.example.jitsiandroid;
  * Created by supuni on 11/21/17.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -60,6 +61,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
     Bitmap ball, bgr, bgrReverse;
     boolean reverseBackroundFirst;
     boolean ballFingerMove;
+    Context context;
 
     //Measure frames per second.
     long now;
@@ -89,6 +91,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
         //bgr = BitmapFactory.decodeResource(getResources(),R.drawable.transparent); //Load a background.
         ballW = ball.getWidth();
         ballH = ball.getHeight();
+        this.context = context;
 
         //Create a flag for the onDraw method to alternate background with its mirror image.
         reverseBackroundFirst = false;
@@ -171,24 +174,32 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
         return true;
     }
 //added new function get user inputs
-   public boolean onMoveEvent(int x, int y){
-        ballX = x;//(int)((screenW*x)/400);
-
-        ballY = y; //(int)((screenH*y)/1140);//0.56
-        Log.d("screen", String.valueOf(screenW));
+   public boolean onMoveEvent(double x, double y){
+        ballX = (int) (x*getScreenWidth());
+        //ballX = 1279;
+        ballY = (int) (y*getScreenHeight());
+       Log.d("ClickX: ", String.valueOf(ballX));
+       Log.d("ClickY: ", String.valueOf(ballY));
+        Log.d("ClickW: ", String.valueOf(getScreenWidth()));
 
         return true;
    }
 
         //get screen size
-       public static int getScreenWidth() {
+       public  int getScreenWidth() {
+           /*DisplayMetrics displayMetrics = new DisplayMetrics();
+           ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+           int height = displayMetrics.heightPixels;
+           int width = displayMetrics.widthPixels;
+            Log.d("ClickH: " , String.valueOf(height));
+           Log.d("ClickW: " , String.valueOf(width));*/
           Log.d("size", String.valueOf(Resources.getSystem().getDisplayMetrics().widthPixels));
           return Resources.getSystem().getDisplayMetrics().widthPixels;
        }
-//
-//    public static int getScreenHeight() {
-//        return Resources.getSystem().getDisplayMetrics().heightPixels;
-//    }
+
+        public static int getScreenHeight() {
+           return Resources.getSystem().getDisplayMetrics().heightPixels;
+        }
 
     @Override
     public void onDraw(Canvas canvas) {
@@ -289,7 +300,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
     }
 
     //get coordinates for onMoveEvent
-    public void onCoordinatesChanged(int startX, int startY) {
+    public void onCoordinatesChanged(double startX, double startY) {
         onMoveEvent(startX,startY);
     }
 

@@ -1,6 +1,5 @@
 package com.example.jitsiandroid;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -14,21 +13,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okhttp3.ws.WebSocket;
-import okhttp3.ws.WebSocketCall;
-import okhttp3.ws.WebSocketListener;
-import okio.Buffer;
 
 import static android.content.ContentValues.TAG;
-import static okhttp3.ws.WebSocket.TEXT;
 
 /**
  * Created by kasumi on 11/21/17.
@@ -38,9 +24,8 @@ public class WebSocketEcho implements Subject {
     private static WebSocketEcho INSTANCE = null;
     private Socket mSocket;
     //coordinates from togetherjs
-    private int startX ,startY, endX, endY;
+    private double startX ,startY;
 
-    private final Executor writeExecutor = Executors.newSingleThreadExecutor();
     //array list for observers
     private List<Observer> observers = new ArrayList<Observer>();
 
@@ -78,39 +63,15 @@ public class WebSocketEcho implements Subject {
             Log.d("EventEmit: ", "update-position");
             JSONObject data = (JSONObject) args[0];
             try {
-                String username = data.getString("username");
-                String room = data.getString("room");
-                int X = data.getInt("X");
-                int Y = data.getInt("Y");
+                double X = (double)data.getInt("X")/(double)data.getInt("width");
+                double Y = (double)data.getInt("Y")/(double)data.getInt("height");
+                Log.d("ClickXX: ", String.valueOf(data.getInt("X")));
+                Log.d("ClickYY: ", String.valueOf(data.getInt("Y")));
                 setCoordinates(X,Y);
-                Log.d("UserCLick : ", username);
                 Log.d("ClickUser: ", String.valueOf(data));
-
-
             } catch (JSONException e) {
                 Log.e(TAG, e.getMessage());
             }
-            writeExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    //JSONObject data = (JSONObject) args[0];
-                    int numUsers;
-                    /*try {
-                        String username = data.getString("username");
-                        String room = data.getString("room");
-                        int X = data.getInt("X");
-                        int Y = data.getInt("Y");
-                        setCoordinates(X,Y);
-                        Log.d("UserCLick : ", username);
-                        Log.d("ClickUser: ", String.valueOf(data));
-
-
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                    }*/
-                    //addLog(getResources().getString(R.string.message_user_joined, username));
-                }
-            });
         }
     };
 
@@ -133,7 +94,7 @@ public class WebSocketEcho implements Subject {
         }
     }
 
-    public void setCoordinates(int startX, int startY) {
+    public void setCoordinates(double startX, double startY) {
         this.startX = startX;
         this.startY = startY;
         notifyObservers();

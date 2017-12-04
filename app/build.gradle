@@ -34,4 +34,5 @@ dependencies {
     implementation 'org.jitsi.react:jitsi-meet-sdk:1.9.0', {
         exclude module: 'okhttp3'
     }
+    implementation 'com.github.nkzawa:socket.io-client:0.3.0'
 }

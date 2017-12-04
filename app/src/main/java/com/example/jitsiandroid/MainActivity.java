@@ -20,12 +20,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+
 public class MainActivity extends AppCompatActivity {
     private JitsiMeetView view;
 
     private FrameLayout jitsi_layout;
 
     private   BallBounces ball;
+
+    private Socket mSocket;
 
     @Override
     public void onBackPressed() {
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         view = new JitsiMeetView(this);
         view.setWelcomePageEnabled(true);//set jitsi-meet

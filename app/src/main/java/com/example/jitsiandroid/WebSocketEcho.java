@@ -1,11 +1,16 @@
 package com.example.jitsiandroid;
 
+import android.os.Bundle;
 import android.util.Log;
+
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -29,6 +34,7 @@ import static okhttp3.ws.WebSocket.TEXT;
 
 public class WebSocketEcho implements WebSocketListener,Subject {
     private static WebSocketEcho INSTANCE = null;
+    private Socket mSocket;
     //coordinates from togetherjs
     private int startX ,startY, endX, endY;
 
@@ -44,16 +50,22 @@ public class WebSocketEcho implements WebSocketListener,Subject {
     }
 
     public void run() throws IOException {
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url("wss://hub.togetherjs.com/12345")
-                .build();
-        WebSocketCall.create(client, request).enqueue(this);
-
-        // Trigger shutdown of the dispatcher's executor so this process can exit cleanly.
-        client.dispatcher().executorService().shutdown();
+//        OkHttpClient client = new OkHttpClient();
+//
+//        Request request = new Request.Builder()
+//                .url("wss://hub.togetherjs.com/12345")
+//                .build();
+//        WebSocketCall.create(client, request).enqueue(this);
+//
+//        // Trigger shutdown of the dispatcher's executor so this process can exit cleanly.
+//        client.dispatcher().executorService().shutdown();
+        try {
+            mSocket = IO.socket("http://192.168.8.110:3030");
+        } catch (URISyntaxException e) {}
+        mSocket.connect();
+        Log.d("connect","connected");
     }
+
 
     @Override public void onOpen(final WebSocket webSocket, Response response) {
         writeExecutor.execute(new Runnable() {

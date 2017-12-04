@@ -5,5 +5,5 @@ package com.example.jitsiandroid;
  */
 
 public interface Observer {
-    void onCoordinatesChanged(int startX, int startY, int endX, int endY);
+    void onCoordinatesChanged(int startX, int startY);
 }

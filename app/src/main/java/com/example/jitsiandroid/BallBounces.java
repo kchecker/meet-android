@@ -289,7 +289,7 @@ class BallBounces extends SurfaceView implements SurfaceHolder.Callback,Observer
     }
 
     //get coordinates for onMoveEvent
-    public void onCoordinatesChanged(int startX, int startY, int endX, int endY) {
+    public void onCoordinatesChanged(int startX, int startY) {
         onMoveEvent(startX,startY);
     }
 

@@ -3,6 +3,7 @@ package com.example.jitsiandroid;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
@@ -26,13 +27,14 @@ import okhttp3.ws.WebSocketCall;
 import okhttp3.ws.WebSocketListener;
 import okio.Buffer;
 
+import static android.content.ContentValues.TAG;
 import static okhttp3.ws.WebSocket.TEXT;
 
 /**
  * Created by kasumi on 11/21/17.
  */
 
-public class WebSocketEcho implements WebSocketListener,Subject {
+public class WebSocketEcho implements Subject {
     private static WebSocketEcho INSTANCE = null;
     private Socket mSocket;
     //coordinates from togetherjs
@@ -50,87 +52,67 @@ public class WebSocketEcho implements WebSocketListener,Subject {
     }
 
     public void run() throws IOException {
-//        OkHttpClient client = new OkHttpClient();
-//
-//        Request request = new Request.Builder()
-//                .url("wss://hub.togetherjs.com/12345")
-//                .build();
-//        WebSocketCall.create(client, request).enqueue(this);
-//
-//        // Trigger shutdown of the dispatcher's executor so this process can exit cleanly.
-//        client.dispatcher().executorService().shutdown();
         try {
             mSocket = IO.socket("http://192.168.8.110:3030");
         } catch (URISyntaxException e) {}
         mSocket.connect();
+        String username = "mobile";
+        String room = "test";
+        JSONObject user = new JSONObject();
+        try {
+            user.put("room", room);
+            user.put("username", username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mSocket.emit("joinroom", user);
         Log.d("connect","connected");
+        mSocket.on("update-position", onNewClick);
     }
 
 
-    @Override public void onOpen(final WebSocket webSocket, Response response) {
-        writeExecutor.execute(new Runnable() {
-            @Override public void run() {
-                try {
-                    webSocket.sendMessage(RequestBody.create(TEXT, "Hello..."));
-                    webSocket.sendMessage(RequestBody.create(TEXT, "...World!"));
-                } catch (IOException e) {
-                    System.err.println("Unable to send messages: " + e.getMessage());
-                }
-            }
-        });
-    }
-
-    @Override public void onMessage(ResponseBody message) throws IOException {
-        if (message.contentType() == TEXT) {
-            String togetherjs = message.string(); //get togetherjs 'msg' object
-            Log.d("TOGETHERJS: " , togetherjs);
+    //add on click========================================================================================
+    private Emitter.Listener onNewClick = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            Log.d("EventEmit: ", "update-position");
+            JSONObject data = (JSONObject) args[0];
             try {
-                //make a JSONObject and retrieve the required values
-                JSONObject togetherjsObject = new JSONObject(togetherjs);
-                String togetherjsType = togetherjsObject.getString("type");
-                getCoordinates(togetherjsType, togetherjsObject); //to get coordinates of a drawing
+                String username = data.getString("username");
+                String room = data.getString("room");
+                int X = data.getInt("X");
+                int Y = data.getInt("Y");
+                setCoordinates(X,Y);
+                Log.d("UserCLick : ", username);
+                Log.d("ClickUser: ", String.valueOf(data));
+
+
             } catch (JSONException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
             }
-        } else {
-            System.out.println("MESSAGE: " + message.source().readByteString().hex());
+            writeExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    //JSONObject data = (JSONObject) args[0];
+                    int numUsers;
+                    /*try {
+                        String username = data.getString("username");
+                        String room = data.getString("room");
+                        int X = data.getInt("X");
+                        int Y = data.getInt("Y");
+                        setCoordinates(X,Y);
+                        Log.d("UserCLick : ", username);
+                        Log.d("ClickUser: ", String.valueOf(data));
+
+
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }*/
+                    //addLog(getResources().getString(R.string.message_user_joined, username));
+                }
+            });
         }
-        //message.close(); //avoid continuous listening
-    }
-
-    //get coordinates------------------------------------------------
-    public void getCoordinates(String togetherjsType, JSONObject togetherjsObject) throws JSONException {
-        int firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY;
-        switch (togetherjsType) {
-            case "app.draw":
-                firstCoordinateX = (int)Double.parseDouble(togetherjsObject.getJSONObject("start").getString("x"));
-                firstCoordinateY = (int)Double.parseDouble(togetherjsObject.getJSONObject("start").getString("y"));
-                secondCoordinateX = (int)Double.parseDouble(togetherjsObject.getJSONObject("end").getString("x"));
-                secondCoordinateY = (int)Double.parseDouble(togetherjsObject.getJSONObject("end").getString("y"));
-                //setCoordinates(firstCoordinateX, firstCoordinateY, secondCoordinateX, secondCoordinateY);
-                break;
-            case "cursor-click":
-                firstCoordinateX = (int)Double.parseDouble(togetherjsObject.getString("offsetX"));
-                firstCoordinateY = (int)Double.parseDouble(togetherjsObject.getString("offsetY"));
-                setCoordinates(firstCoordinateX,firstCoordinateY,0,0);
-                break;
-            default:
-                //setCoordinates(0,0,0,0);
-                break;
-        }
-    }
-
-    @Override public void onPong(Buffer payload) {
-        System.out.println("PONG: " + payload.readUtf8());
-    }
-
-    @Override public void onClose(int code, String reason) {
-        System.out.println("CLOSE: " + code + " " + reason);
-    }
-
-    @Override public void onFailure(IOException e, Response response) {
-        e.printStackTrace();
-    }
+    };
 
     //observer design pattern added----------------------------------------------------------------------------------------
     public void registerObserver(Observer coordinatesObserver) {
@@ -147,15 +129,13 @@ public class WebSocketEcho implements WebSocketListener,Subject {
 
     public void notifyObservers() {
         for (Observer observer: observers) {
-            observer.onCoordinatesChanged(startX ,startY, endX, endY);
+            observer.onCoordinatesChanged(startX ,startY);
         }
     }
 
-    public void setCoordinates(int startX, int startY, int endX, int endY) {
+    public void setCoordinates(int startX, int startY) {
         this.startX = startX;
         this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
         notifyObservers();
     }
 }

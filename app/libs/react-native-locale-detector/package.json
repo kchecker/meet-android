@@ -1,0 +1,89 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-native-locale-detector@1.0.1",
+        "scope": null,
+        "escapedName": "react-native-locale-detector",
+        "name": "react-native-locale-detector",
+        "rawSpec": "1.0.1",
+        "spec": "1.0.1",
+        "type": "version"
+      },
+      "/home/kasumi/WebstormProjects/jitsi-meet"
+    ]
+  ],
+  "_from": "react-native-locale-detector@1.0.1",
+  "_id": "react-native-locale-detector@1.0.1",
+  "_inCache": true,
+  "_location": "/react-native-locale-detector",
+  "_nodeVersion": "6.2.1",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/react-native-locale-detector-1.0.1.tgz_1473669826257_0.9098476900253445"
+  },
+  "_npmUser": {
+    "name": "dylanvann",
+    "email": "dylan.vann@gmail.com"
+  },
+  "_npmVersion": "3.10.5",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-locale-detector@1.0.1",
+    "scope": null,
+    "escapedName": "react-native-locale-detector",
+    "name": "react-native-locale-detector",
+    "rawSpec": "1.0.1",
+    "spec": "1.0.1",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-locale-detector/-/react-native-locale-detector-1.0.1.tgz",
+  "_shasum": "c002261ecb60619e5952257c8c7fa31c2c15ed30",
+  "_shrinkwrap": null,
+  "_spec": "react-native-locale-detector@1.0.1",
+  "_where": "/home/kasumi/WebstormProjects/jitsi-meet",
+  "author": {
+    "name": "Dylan Vann",
+    "email": "dylan.vann@gmail.com",
+    "url": "dylanvann.com"
+  },
+  "bugs": {
+    "url": "https://github.com/dylanvann/react-native-locale-detector/issues"
+  },
+  "dependencies": {},
+  "description": "Detects the locale of a user's phone.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "c002261ecb60619e5952257c8c7fa31c2c15ed30",
+    "tarball": "https://registry.npmjs.org/react-native-locale-detector/-/react-native-locale-detector-1.0.1.tgz"
+  },
+  "gitHead": "55e1c3c5e2d952b1bcb585dfe0117ac5a5360db6",
+  "homepage": "https://github.com/dylanvann/react-native-locale-detector#readme",
+  "keywords": [
+    "android",
+    "i18n",
+    "ios",
+    "react-native"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "dylanvann",
+      "email": "dylan.vann@gmail.com"
+    }
+  ],
+  "name": "react-native-locale-detector",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylanvann/react-native-locale-detector.git"
+  },
+  "scripts": {},
+  "version": "1.0.1"
+}

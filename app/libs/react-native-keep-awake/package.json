@@ -1,0 +1,90 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-native-keep-awake@2.0.5",
+        "scope": null,
+        "escapedName": "react-native-keep-awake",
+        "name": "react-native-keep-awake",
+        "rawSpec": "2.0.5",
+        "spec": "2.0.5",
+        "type": "version"
+      },
+      "/home/kasumi/WebstormProjects/jitsi-meet"
+    ]
+  ],
+  "_from": "react-native-keep-awake@2.0.5",
+  "_id": "react-native-keep-awake@2.0.5",
+  "_inCache": true,
+  "_location": "/react-native-keep-awake",
+  "_nodeVersion": "8.2.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/react-native-keep-awake-2.0.5.tgz_1502228185208_0.10203194082714617"
+  },
+  "_npmUser": {
+    "name": "corbt",
+    "email": "kyle@corbt.com"
+  },
+  "_npmVersion": "5.3.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-keep-awake@2.0.5",
+    "scope": null,
+    "escapedName": "react-native-keep-awake",
+    "name": "react-native-keep-awake",
+    "rawSpec": "2.0.5",
+    "spec": "2.0.5",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-keep-awake/-/react-native-keep-awake-2.0.5.tgz",
+  "_shasum": "b1ff5667611c018c44b285b855f32e93b1c16fd9",
+  "_shrinkwrap": null,
+  "_spec": "react-native-keep-awake@2.0.5",
+  "_where": "/home/kasumi/WebstormProjects/jitsi-meet",
+  "author": {
+    "name": "Kyle Corbitt"
+  },
+  "bugs": {
+    "url": "https://github.com/corbt/react-native-keep-awake/issues"
+  },
+  "dependencies": {},
+  "description": "Keep the screen from going to sleep. iOS and Android.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-Uo0Dw4S0H4njBGg9dpMevI9RsKZumwUxyVXJ3pa0fSUheQGnwoaUrBG953XAu4KDgWIRW4BfrDtoaEmoOAt3lg==",
+    "shasum": "b1ff5667611c018c44b285b855f32e93b1c16fd9",
+    "tarball": "https://registry.npmjs.org/react-native-keep-awake/-/react-native-keep-awake-2.0.5.tgz"
+  },
+  "gitHead": "03f9a7cf340dd7922a8729d1eb8ba1feda64b7b2",
+  "homepage": "https://github.com/corbt/react-native-keep-awake#readme",
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "awake",
+    "screen",
+    "lock",
+    "sleep"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "corbt",
+      "email": "kyle@corbt.com"
+    }
+  ],
+  "name": "react-native-keep-awake",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corbt/react-native-keep-awake.git"
+  },
+  "version": "2.0.5"
+}

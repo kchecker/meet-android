@@ -1,0 +1,93 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-native-background-timer@1.2.0",
+        "scope": null,
+        "escapedName": "react-native-background-timer",
+        "name": "react-native-background-timer",
+        "rawSpec": "1.2.0",
+        "spec": "1.2.0",
+        "type": "version"
+      },
+      "/home/kasumi/WebstormProjects/jitsi-meet"
+    ]
+  ],
+  "_from": "react-native-background-timer@1.2.0",
+  "_id": "react-native-background-timer@1.2.0",
+  "_inCache": true,
+  "_location": "/react-native-background-timer",
+  "_nodeVersion": "8.1.2",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/react-native-background-timer-1.2.0.tgz_1501916357841_0.9067131348419935"
+  },
+  "_npmUser": {
+    "name": "ocetnik",
+    "email": "ocetnik.david@gmail.com"
+  },
+  "_npmVersion": "4.6.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-background-timer@1.2.0",
+    "scope": null,
+    "escapedName": "react-native-background-timer",
+    "name": "react-native-background-timer",
+    "rawSpec": "1.2.0",
+    "spec": "1.2.0",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-background-timer/-/react-native-background-timer-1.2.0.tgz",
+  "_shasum": "fd951f93e5c70ec899a5fb4285e1270d0e8b9fb2",
+  "_shrinkwrap": null,
+  "_spec": "react-native-background-timer@1.2.0",
+  "_where": "/home/kasumi/WebstormProjects/jitsi-meet",
+  "author": {
+    "name": "David Ocetnik"
+  },
+  "bugs": {
+    "url": "https://github.com/ocetnik/react-native-background-timer/issues"
+  },
+  "dependencies": {},
+  "description": "Emit event periodically (even when app is in the background)",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "fd951f93e5c70ec899a5fb4285e1270d0e8b9fb2",
+    "tarball": "https://registry.npmjs.org/react-native-background-timer/-/react-native-background-timer-1.2.0.tgz"
+  },
+  "gitHead": "07dd6694c1cae6bcaf201aa63ea633e6f766b65b",
+  "homepage": "https://github.com/ocetnik/react-native-background-timer#readme",
+  "keywords": [
+    "android",
+    "ios",
+    "react-component",
+    "react-native",
+    "timer"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "ocetnik",
+      "email": "ocetnik.david@gmail.com"
+    }
+  ],
+  "name": "react-native-background-timer",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react-native": ">=0.47.0"
+  },
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ocetnik/react-native-background-timer.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.2.0"
+}

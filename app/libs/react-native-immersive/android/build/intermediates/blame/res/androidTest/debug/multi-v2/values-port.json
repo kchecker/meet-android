@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/kasumi/AndroidStudioProjects/JitsiAndroid/app/libs/react-native-immersive/android/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-port/values-port.xml",
+            "map": [
+                {
+                    "source": "/home/kasumi/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/0ae7b3451af69e757b28302c3219bb7d/res/values-port/values-port.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "4",
+                        "startOffsets": "280",
+                        "endColumns": "55",
+                        "endOffsets": "331"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "55",
+                        "endOffsets": "106"
+                    }
+                }
+            ]
+        }
+    ]
+}

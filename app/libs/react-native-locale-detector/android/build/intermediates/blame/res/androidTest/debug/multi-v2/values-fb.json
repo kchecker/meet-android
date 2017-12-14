@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/kasumi/AndroidStudioProjects/JitsiAndroid/app/libs/react-native-locale-detector/android/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values-fb/values-fb.xml",
+            "map": [
+                {
+                    "source": "/home/kasumi/.gradle/caches/transforms-1/files-1.1/react-native-0.12.0.aar/5a3cff9ac4c05f88f79c54096f17df91/res/values-fb/values-fb.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "191,282,388,504,612,714,807,903",
+                        "endColumns": "90,105,115,107,101,92,95,110",
+                        "endOffsets": "277,383,499,607,709,802,898,1009"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,146,252,368,476,578,671,767",
+                        "endColumns": "90,105,115,107,101,92,95,110",
+                        "endOffsets": "141,247,363,471,573,666,762,873"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -14,14 +14,11 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-
-// Cookies
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.network.ForwardingCookieHandler;
+
 import com.facebook.react.modules.network.CookieJarContainer;
+import com.facebook.react.modules.network.ForwardingCookieHandler;
 import com.facebook.react.modules.network.OkHttpClientProvider;
-import okhttp3.OkHttpClient;
-import okhttp3.JavaNetCookieJar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +26,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.JavaNetCookieJar;
+import okhttp3.OkHttpClient;
+
 import static android.app.Activity.RESULT_OK;
 import static com.RNFetchBlob.RNFetchBlobConst.GET_CONTENT_INTENT;
+
+// Cookies
 
 public class RNFetchBlob extends ReactContextBaseJavaModule {
 

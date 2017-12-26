@@ -20,7 +20,7 @@ allprojects {
         google()
         jcenter()
         maven {
-            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
+            url "https://github.com/meetrix/jitsi-maven-repository/raw/meetrix/releases"
         }
     }
 }

@@ -71,7 +71,7 @@ public class MainActivity extends JitsiMeetActivity {
         config.putBoolean("startWithVideoMuted", false);
         Bundle urlObject = new Bundle();
         urlObject.putBundle("config", config);
-        urlObject.putString("url", "https://meet.jit.si/1234");
+        urlObject.putString("url", "https://meet.meetrix.xyz/test");
         view.loadURLObject(urlObject);
 
         return view;

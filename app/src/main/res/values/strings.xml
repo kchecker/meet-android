@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Clever Ideas</string>
+    <string name="title_activity_welcome">Clever Ideas</string>
 </resources>

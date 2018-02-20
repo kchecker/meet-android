@@ -15,6 +15,8 @@ import java.util.Map;
 
 public class MainActivity extends JitsiMeetActivity {
 
+    public static String roomName;
+
     @Override
     protected JitsiMeetView initializeView() {
         JitsiMeetView view = super.initializeView();
@@ -22,6 +24,7 @@ public class MainActivity extends JitsiMeetActivity {
         // XXX In order to increase (1) awareness of API breakages and (2) API
         // coverage, utilize JitsiMeetViewListener in the Debug configuration of
         // the app.
+
         if (BuildConfig.DEBUG && view != null) {
             view.setListener(new JitsiMeetViewListener() {
                 private void on(String name, Map<String, Object> data) {
@@ -69,9 +72,11 @@ public class MainActivity extends JitsiMeetActivity {
         Bundle config = new Bundle();
         config.putBoolean("startWithAudioMuted", false);
         config.putBoolean("startWithVideoMuted", false);
+        String fullUrl = "https://show.cleverideas.com.mx/"+roomName;
         Bundle urlObject = new Bundle();
         urlObject.putBundle("config", config);
-        urlObject.putString("url", "https://meet.jit.si/1234");
+        urlObject.putString("url", fullUrl);
+
         view.loadURLObject(urlObject);
 
         return view;
@@ -88,8 +93,19 @@ public class MainActivity extends JitsiMeetActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setWelcomePageEnabled(true);
+        Intent intent = getIntent();
+        roomName = intent.getStringExtra(WelcomeActivity.EXTRA_MESSAGE);
+
+        setWelcomePageEnabled(false);
+
         super.onCreate(savedInstanceState);
+//        try{
+//            loadURL(new URL("https://show.cleverideas.com.mx"));
+//        }catch(MalformedURLException e){
+//            e.printStackTrace();
+//        }
+
+
     }
 
     @Override

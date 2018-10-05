@@ -7,15 +7,16 @@ repositories {
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.0'
     }
 }
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '28.0.2'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
@@ -33,7 +34,7 @@ android {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
     //{RNFetchBlob_PRE_0.28_DEPDENDENCY}
 }

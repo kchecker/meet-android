@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 19
     defaultConfig {
         multiDexEnabled true
         applicationId "com.example.jitsiandroid"
@@ -28,11 +28,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'org.jitsi.react:jitsi-meet-sdk:1.9.0@aar'
-    compile project(':react-native-keep-awake')
-    compile project(':react-native-vector-icons')
-    compile project(':react-native-background-timer')
-    compile project(':react-native-webrtc')
-    compile project(':react-native-fetch-blob')
-    compile project(':react-native-locale-detector')
-    compile project(':react-native-immersive')
+    implementation project(':react-native-keep-awake')
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-background-timer')
+    implementation project(':react-native-webrtc')
+    implementation project(':react-native-fetch-blob')
+    implementation project(':react-native-locale-detector')
+    implementation project(':react-native-immersive')
 }
